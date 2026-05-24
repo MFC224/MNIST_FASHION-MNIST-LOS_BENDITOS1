@@ -15,8 +15,9 @@ st.set_page_config(
 # 2. Caché para cargar los modelos de forma eficiente
 @st.cache_resource
 def cargar_modelos():
-    modelo_numeros = tf.keras.models.load_model('modelo_mnist.h5')
-    modelo_ropa = tf.keras.models.load_model('modelo_fashion.h5')
+    # Cambiamos .h5 por .keras
+    modelo_numeros = tf.keras.models.load_model('modelo_mnist.keras')
+    modelo_ropa = tf.keras.models.load_model('modelo_fashion.keras')
     return modelo_numeros, modelo_ropa
 
 try:
