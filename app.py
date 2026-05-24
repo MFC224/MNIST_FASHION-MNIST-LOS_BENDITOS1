@@ -22,7 +22,8 @@ def cargar_modelos():
 try:
     modelo_numeros, modelo_ropa = cargar_modelos()
 except Exception as e:
-    st.error("⚠️ Error crítico: No se encontraron los modelos 'modelo_mnist.h5' o 'modelo_fashion.h5' en el directorio.")
+    # Ahora sí, vamos a imprimir el error real que nos da el sistema
+    st.error(f"⚠️ Error real al cargar los modelos: {str(e)}")
     st.stop()
 
 # Diccionario de clases para Fashion MNIST
