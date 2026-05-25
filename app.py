@@ -15,9 +15,29 @@ st.set_page_config(
 # 2. Caché para cargar los modelos de forma eficiente
 @st.cache_resource
 def cargar_modelos():
-    # Cambiamos .h5 por .keras
-    modelo_numeros = tf.keras.models.load_model('modelo_mnist.keras')
-    modelo_ropa = tf.keras.models.load_model('modelo_fashion.keras')
+    # 1. Escribimos la arquitectura exacta que usaste en tu Colab
+    def construir_cnn():
+        modelo = tf.keras.models.Sequential([
+            tf.keras.layers.Input(shape=(28, 28, 1)),
+            tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
+            tf.keras.layers.MaxPooling2D((2, 2)),
+            tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
+            tf.keras.layers.MaxPooling2D((2, 2)),
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(64, activation='relu'),
+            tf.keras.layers.Dense(10, activation='softmax')
+        ])
+        return modelo
+
+    # 2. Construimos dos "cerebros" vacíos
+    modelo_numeros = construir_cnn()
+    modelo_ropa = construir_cnn()
+
+    # 3. Le inyectamos SOLO el conocimiento (pesos), saltándonos la configuración rota
+    # (Asegúrate de que los nombres coincidan con los que tienes en GitHub)
+    modelo_numeros.load_weights('modelo_mnist.keras')
+    modelo_ropa.load_weights('modelo_fashion.keras')
+    
     return modelo_numeros, modelo_ropa
 
 try:
